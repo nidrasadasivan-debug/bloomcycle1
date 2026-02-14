@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Log Symptoms | BloomCycle</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  background: linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  min-height:100vh;
+  padding:30px;
+  color:white;
+}
+
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
+.card{
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(20px);
+  padding:35px;
+  border-radius:25px;
+  margin-bottom:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+h1{
+  text-align:center;
+  margin-bottom:20px;
+}
+
+label{
+  display:block;
+  margin-top:15px;
+  margin-bottom:6px;
+  font-weight:500;
+}
+
+input, select, textarea{
+  width:100%;
+  padding:10px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  background:rgba(255,255,255,0.3);
+  color:white;
+}
+
+textarea{
+  resize:none;
+  min-height:80px;
+}
+
+.symptoms-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
+  gap:10px;
+}
+
+.symptoms-grid label{
+  display:flex;
+  align-items:center;
+  font-weight:400;
+}
+
+.symptoms-grid input{
+  margin-right:6px;
+  width:auto;
+}
+
+button{
+  margin-top:20px;
+  padding:12px;
+  border:none;
+  border-radius:15px;
+  background:white;
+  color:#a18cd1;
+  font-weight:600;
+  cursor:pointer;
+  width:100%;
+}
+
+.entry{
+  background:rgba(255,255,255,0.3);
+  padding:15px;
+  border-radius:15px;
+  margin-bottom:10px;
+}
+
+</style>
+</head>
+
+<body>
+  <a href ="dashboard.html"> Back to Dashboard</a>
+
+<div class="container">
+
+  <div class="card">
+    <h1>Log Your Symptoms 🌸</h1>
+
+    <form id="symptomForm">
+
+      <label>Date</label>
+      <input type="date" id="date" required>
+
+      <label>Cycle Phase</label>
+      <select id="phase" required>
+        <option value="">Select Phase</option>
+        <option>Menstrual</option>
+        <option>Follicular</option>
+        <option>Ovulation</option>
+        <option>Luteal</option>
+      </select>
+
+      <label>Physical Symptoms</label>
+      <div class="symptoms-grid">
+        <label><input type="checkbox" value="Cramps">Cramps</label>
+        <label><input type="checkbox" value="Headache">Headache</label>
+        <label><input type="checkbox" value="Bloating">Bloating</label>
+        <label><input type="checkbox" value="Fatigue">Fatigue</label>
+        <label><input type="checkbox" value="Breast Tenderness">Breast Tenderness</label>
+        <label><input type="checkbox" value="Acne">Acne</label>
+      </div>
+
+      <label>Mood</label>
+      <select id="mood" required>
+        <option value="">Select Mood</option>
+        <option>Happy</option>
+        <option>Calm</option>
+        <option>Irritable</option>
+        <option>Anxious</option>
+        <option>Sad</option>
+      </select>
+
+      <label>Pain Level (1-10)</label>
+      <input type="range" id="pain" min="1" max="10" value="1" oninput="painValue.innerText=this.value">
+      <div>Level: <span id="painValue">1</span></div>
+
+      <label>Additional Notes</label>
+      <textarea id="notes"></textarea>
+
+      <button type="submit">Save Entry</button>
+
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Logged Entries 📋</h2>
+    <div id="entries"></div>
+  </div>
+
+</div>
+
+<script>
+
+// Set today as default date
+document.getElementById("date").valueAsDate = new Date();
+
+const form = document.getElementById("symptomForm");
+const entriesDiv = document.getElementById("entries");
+
+// Load previous entries
+let symptomLogs = JSON.parse(localStorage.getItem("symptomLogs")) || [];
+displayEntries();
+
+form.addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const selectedSymptoms = Array.from(
+    document.querySelectorAll(".symptoms-grid input:checked")
+  ).map(cb => cb.value);
+
+  const entry = {
+    date: date.value,
+    phase: phase.value,
+    symptoms: selectedSymptoms,
+    mood: mood.value,
+    pain: pain.value,
+    notes: notes.value
+  };
+
+  symptomLogs.push(entry);
+  localStorage.setItem("symptomLogs", JSON.stringify(symptomLogs));
+
+  form.reset();
+  document.getElementById("painValue").innerText = "1";
+  displayEntries();
+});
+
+function displayEntries(){
+  entriesDiv.innerHTML = "";
+
+  symptomLogs.slice().reverse().forEach(log => {
+    const div = document.createElement("div");
+    div.className = "entry";
+    div.innerHTML = `
+      <strong>Date:</strong> ${log.date}<br>
+      <strong>Phase:</strong> ${log.phase}<br>
+      <strong>Symptoms:</strong> ${log.symptoms.join(", ")}<br>
+      <strong>Mood:</strong> ${log.mood}<br>
+      <strong>Pain Level:</strong> ${log.pain}<br>
+      <strong>Notes:</strong> ${log.notes}
+    `;
+    entriesDiv.appendChild(div);
+  });
+}
+
+</script>
+
+</body>
+</html>

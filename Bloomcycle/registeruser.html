@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account | BloomCycle</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #fbc2eb, #a6c1ee, #ff9a9e, #fad0c4);
+  background-size: 400% 400%;
+  animation: gradientBG 14s ease infinite;
+  padding: 20px;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== CARD ===== */
+.auth-container {
+  width: 100%;
+  max-width: 480px;
+}
+
+.auth-card {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(25px);
+  padding: 45px 40px;
+  border-radius: 25px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+  color: white;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(25px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card h1 {
+  text-align: center;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.auth-card p {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* ===== INPUTS ===== */
+.input-group {
+  position: relative;
+  margin-bottom: 22px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.3);
+  color: white;
+  font-size: 14px;
+}
+
+.input-group input:focus {
+  background: rgba(255,255,255,0.4);
+}
+
+.input-group label {
+  position: absolute;
+  top: 14px;
+  left: 15px;
+  font-size: 14px;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 12px;
+  font-size: 12px;
+  background: rgba(0,0,0,0.3);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* Password strength bar */
+.strength-bar {
+  height: 6px;
+  border-radius: 5px;
+  margin-top: 6px;
+  background: rgba(255,255,255,0.3);
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  width: 0%;
+  transition: 0.3s;
+}
+
+/* Checkbox */
+.terms {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  margin-bottom: 20px;
+}
+
+.terms input {
+  margin-right: 8px;
+}
+
+/* Button */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: white;
+  color: #a18cd1;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0,0,0,0.25);
+}
+
+.message {
+  text-align: center;
+  font-size: 13px;
+  margin-bottom: 15px;
+  display: none;
+}
+
+.success { color: #d4ffcc; }
+.error { color: #ffd6d6; }
+
+.switch {
+  text-align: center;
+  font-size: 13px;
+  margin-top: 18px;
+}
+
+.switch a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Join BloomCycle 🌸</h1>
+    <p>Create your personalized health profile</p>
+
+    <div id="messageBox" class="message"></div>
+
+    <form id="registerForm">
+
+      <div class="input-group">
+        <input type="text" id="fullName" placeholder=" " required>
+        <label>Full Name</label>
+      </div>
+
+      <div class="input-group">
+        <input type="number" id="age" placeholder=" " min="12" max="55" required>
+        <label>Age</label>
+      </div>
+
+      <div class="input-group">
+        <input type="email" id="email" placeholder=" " required>
+        <label>Email Address</label>
+      </div>
+
+      <!-- <div class="input-group">
+        <input type="number" id="cycleLength" placeholder=" " value="28" min="21" max="35">
+        <label>Average Cycle Length (days)</label>
+      </div> -->
+
+      <div class="input-group">
+        <input type="password" id="password" placeholder=" " required>
+        <label>Password</label>
+        <div class="strength-bar">
+          <div id="strengthFill" class="strength-fill"></div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="confirmPassword" placeholder=" " required>
+        <label>Confirm Password</label>
+      </div>
+
+      <div class="terms">
+        <input type="checkbox" id="terms">
+        <label for="terms">I agree to Terms & Privacy Policy</label>
+      </div>
+
+      <button type="submit">Create Account</button>
+
+    </form>
+
+    <div class="switch">
+      Already have account? <a href="login.html">Login</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+const form = document.getElementById("registerForm");
+const messageBox = document.getElementById("messageBox");
+const passwordInput = document.getElementById("password");
+const strengthFill = document.getElementById("strengthFill");
+
+/* PASSWORD STRENGTH */
+passwordInput.addEventListener("input", function() {
+  const value = passwordInput.value;
+  let strength = 0;
+
+  if (value.length >= 6) strength += 1;
+  if (/[A-Z]/.test(value)) strength += 1;
+  if (/[0-9]/.test(value)) strength += 1;
+  if (/[^A-Za-z0-9]/.test(value)) strength += 1;
+
+  const percent = strength * 25;
+  strengthFill.style.width = percent + "%";
+
+  if (percent <= 25) strengthFill.style.background = "red";
+  else if (percent <= 50) strengthFill.style.background = "orange";
+  else if (percent <= 75) strengthFill.style.background = "yellow";
+  else strengthFill.style.background = "limegreen";
+});
+
+/* REGISTER */
+form.addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const user = {
+    name: fullName.value.trim(),
+    age: age.value,
+    email: email.value.trim(),
+    // cycleLength: cycleLength.value,
+    password: password.value
+  };
+
+  const confirmPassword = document.getElementById("confirmPassword").value;
+  const termsChecked = document.getElementById("terms").checked;
+
+  messageBox.style.display = "none";
+
+  if (!termsChecked)
+    return showMessage("You must agree to the terms.", "error");
+
+  if (user.password !== confirmPassword)
+    return showMessage("Passwords do not match.", "error");
+
+  const existingUser = JSON.parse(localStorage.getItem("user"));
+
+  if (existingUser && existingUser.email === user.email)
+    return showMessage("Email already registered.", "error");
+
+  localStorage.setItem("user", JSON.stringify(user));
+
+  showMessage("Account created successfully! Redirecting...", "success");
+
+  setTimeout(() => {
+    window.location.href = "login.html";
+  }, 2000);
+});
+
+/* MESSAGE DISPLAY */
+function showMessage(text, type) {
+  messageBox.textContent = text;
+  messageBox.className = "message " + type;
+  messageBox.style.display = "block";
+}
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | BloomCycle</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===== ANIMATED BACKGROUND ===== */
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #a18cd1, #fbc2eb);
+  background-size: 400% 400%;
+  animation: gradientBG 12s ease infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== CARD ===== */
+.auth-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 20px;
+}
+
+.auth-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(20px);
+  padding: 45px 35px;
+  border-radius: 22px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  color: white;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.auth-card h1 {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.auth-card p {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* ===== INPUTS ===== */
+.input-group {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.25);
+  color: white;
+  font-size: 14px;
+}
+
+.input-group input:focus {
+  background: rgba(255,255,255,0.35);
+}
+
+.input-group label {
+  position: absolute;
+  top: 14px;
+  left: 15px;
+  font-size: 14px;
+  color: #f1f1f1;
+  pointer-events: none;
+  transition: 0.3s;
+}
+
+/* Floating effect */
+.input-group input:focus + label,
+.input-group input:not(:placeholder-shown) + label {
+  top: -10px;
+  left: 12px;
+  font-size: 12px;
+  background: rgba(0,0,0,0.3);
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+/* Eye Icon */
+.toggle-password {
+  position: absolute;
+  right: 15px;
+  top: 14px;
+  cursor: pointer;
+}
+
+/* ===== BUTTON ===== */
+button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: white;
+  color: #a18cd1;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Switch link */
+.switch {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 13px;
+}
+
+.switch a {
+  color: white;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Error message */
+.error-message {
+  font-size: 13px;
+  text-align: center;
+  margin-bottom: 15px;
+  color: #ffdddd;
+  display: none;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>BloomCycle 🌸</h1>
+    <p>Welcome back</p>
+
+    <div class="error-message" id="errorBox"></div>
+
+    <form id="loginForm">
+      <div class="input-group">
+        <input type="email" id="loginEmail" placeholder=" " required>
+        <label>Email Address</label>
+      </div>
+
+      <div class="input-group">
+        <input type="password" id="loginPassword" placeholder=" " required>
+        <label>Password</label>
+        <span class="toggle-password" onclick="togglePassword()">👁</span>
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <p class="switch">
+      Don’t have an account? <a href="registeruser.html">Create Account</a>
+
+    </p>
+  </div>
+</div>
+
+<!-- <script>
+
+// Redirect if already logged in
+if (localStorage.getItem("loggedInUser")) {
+  window.location.href = "dashboard.html";
+}
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const emailInput = document.getElementById("loginEmail").value.trim();
+  const passwordInput = document.getElementById("loginPassword").value.trim();
+
+  const users = JSON.parse(localStorage.getItem("users")) || [];
+
+  const matchedUser = users.find(user =>
+    user.email === emailInput && user.password === passwordInput
+  );
+
+  if (matchedUser) {
+    localStorage.setItem("loggedInUser", emailInput);
+    window.location.href = "dashboard.html";
+  } else {
+    showError("Invalid email or password.");
+  }
+});
+
+function togglePassword() {
+  const passwordInput = document.getElementById("loginPassword");
+  passwordInput.type =
+    passwordInput.type === "password" ? "text" : "password";
+}
+
+function showError(message) {
+  const errorBox = document.getElementById("errorBox");
+  errorBox.textContent = message;
+  errorBox.style.display = "block";
+
+  setTimeout(() => {
+    errorBox.style.display = "none";
+  }, 3000);
+}
+
+</script>
+
+
+</body>
+</html> -->
+<script>
+
+// Redirect if already logged in
+if (localStorage.getItem("loggedInUser")) {
+  window.location.href = "dashboard.html";
+}
+
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const emailInput = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const passwordInput = document.getElementById("loginPassword").value.trim();
+
+  const users = [JSON.parse(localStorage.getItem("user"))] || [];
+  
+  const matchedUser = users.find(user =>
+    user.email.toLowerCase() === emailInput &&
+    user.password === passwordInput
+  );
+
+  if (matchedUser) {
+    localStorage.setItem("loggedInUser", matchedUser.email);
+    window.location.href = "registeruser.html";
+  } else {
+    showError("Invalid email or password.");
+  }
+});
+
+function togglePassword() {
+  const passwordInput = document.getElementById("loginPassword");
+  passwordInput.type =
+    passwordInput.type === "password" ? "text" : "password";
+}
+
+function showError(message) {
+  const errorBox = document.getElementById("errorBox");
+  errorBox.textContent = message;
+  errorBox.style.display = "block";
+
+  setTimeout(() => {
+    errorBox.style.display = "none";
+  }, 5000);
+}
+
+</script>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Cycle Diet Plan | BloomCycle</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  min-height:100vh;
+  padding:30px;
+  color:white;
+}
+
+.container {
+  max-width:950px;
+  margin:auto;
+}
+
+.card {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(20px);
+  padding:40px;
+  border-radius:25px;
+  margin-bottom:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+  animation:fade 0.6s ease;
+}
+
+h1 {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.tabs {
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:25px;
+}
+
+.tab {
+  padding:10px 18px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.3);
+  cursor:pointer;
+  margin:5px;
+  transition:0.3s;
+}
+
+.tab.active {
+  background:white;
+  color:#a18cd1;
+}
+
+.section {
+  display:none;
+}
+
+.section.active {
+  display:block;
+}
+
+ul {
+  margin-top:10px;
+  line-height:1.8;
+}
+
+.highlight {
+  margin-top:20px;
+  padding:15px;
+  border-radius:15px;
+  background:rgba(255,255,255,0.3);
+}
+
+@keyframes fade {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+button {
+  margin-top:20px;
+  padding:12px 20px;
+  border:none;
+  border-radius:15px;
+  background:white;
+  color:#a18cd1;
+  font-weight:600;
+  cursor:pointer;
+}
+
+</style>
+</head>
+
+<body>
+  <div style="margin-bottom:20px;">
+  <a href ="Dashboard.html"> Back to Dashboard</a>
+</div>
+
+
+<div class="container">
+  <div class="card">
+    <h1>Menstrual Cycle Diet Plan 🌸</h1>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showSection(0)">Menstrual</div>
+      <div class="tab" onclick="showSection(1)">Follicular</div>
+      <div class="tab" onclick="showSection(2)">Ovulation</div>
+      <div class="tab" onclick="showSection(3)">Luteal</div>
+    </div>
+
+    <!-- MENSTRUAL -->
+    <div class="section active">
+      <h3>Menstrual Phase (Days 1–5)</h3>
+      <p>Your body is losing iron and energy. Focus on replenishment.</p>
+
+      <ul>
+        <li>Iron-rich foods: Spinach, Lentils, Red meat</li>
+        <li>Vitamin C foods: Oranges, Kiwi</li>
+        <li>Warm soups & herbal teas</li>
+        <li>Dark chocolate (70%+)</li>
+      </ul>
+
+      <div class="highlight">
+        Avoid: Excess caffeine, very salty foods
+      </div>
+    </div>
+
+    <!-- FOLLICULAR -->
+    <div class="section">
+      <h3>Follicular Phase (Days 6–14)</h3>
+      <p>Energy begins rising. Light, fresh foods work best.</p>
+
+      <ul>
+        <li>Leafy greens</li>
+        <li>Fermented foods (yogurt, kimchi)</li>
+        <li>Lean protein (chicken, tofu)</li>
+        <li>Whole grains</li>
+      </ul>
+
+      <div class="highlight">
+        Focus: Detox-supporting foods & hydration
+      </div>
+    </div>
+
+    <!-- OVULATION -->
+    <div class="section">
+      <h3>Ovulation Phase (Mid Cycle)</h3>
+      <p>Hormones peak. Eat anti-inflammatory foods.</p>
+
+      <ul>
+        <li>Avocados</li>
+        <li>Salmon & omega-3 foods</li>
+        <li>Colorful vegetables</li>
+        <li>Seeds (chia, flax)</li>
+      </ul>
+
+      <div class="highlight">
+        Focus: Antioxidants & healthy fats
+      </div>
+    </div>
+
+    <!-- LUTEAL -->
+    <div class="section">
+      <h3>Luteal Phase (Before Period)</h3>
+      <p>Energy drops. PMS may occur.</p>
+
+      <ul>
+        <li>Complex carbs (sweet potatoes)</li>
+        <li>Magnesium-rich foods (nuts, bananas)</li>
+        <li>High-fiber foods</li>
+        <li>Plenty of water</li>
+      </ul>
+
+      <div class="highlight">
+        Avoid: Sugary snacks & processed foods
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+function showSection(index){
+  const tabs = document.querySelectorAll(".tab");
+  const sections = document.querySelectorAll(".section");
+
+  tabs.forEach(t => t.classList.remove("active"));
+  sections.forEach(s => s.classList.remove("active"));
+
+  tabs[index].classList.add("active");
+  sections[index].classList.add("active");
+}
+
+</script>
+
+</body>
+</html>

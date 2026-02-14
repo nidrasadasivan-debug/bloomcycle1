@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Menstrual Education | BloomCycle</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg,#fbc2eb,#a6c1ee);
+  min-height:100vh;
+  padding:30px;
+  color:white;
+}
+
+.container {
+  max-width:900px;
+  margin:auto;
+}
+
+.card {
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(20px);
+  padding:40px;
+  border-radius:25px;
+  margin-bottom:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+}
+
+h1 {
+  text-align:center;
+  margin-bottom:20px;
+}
+
+.tabs {
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:20px;
+  flex-wrap:wrap;
+}
+
+.tab {
+  padding:10px 15px;
+  border-radius:20px;
+  background:rgba(255,255,255,0.3);
+  cursor:pointer;
+  margin:5px;
+  transition:0.3s;
+}
+
+.tab.active {
+  background:white;
+  color:#a18cd1;
+}
+
+.section {
+  display:none;
+  animation:fade 0.4s ease;
+}
+
+.section.active {
+  display:block;
+}
+
+@keyframes fade {
+  from {opacity:0; transform:translateY(10px);}
+  to {opacity:1; transform:translateY(0);}
+}
+
+.quiz {
+  margin-top:20px;
+}
+
+button {
+  margin-top:15px;
+  padding:12px 20px;
+  border:none;
+  border-radius:15px;
+  background:white;
+  color:#a18cd1;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.result {
+  margin-top:10px;
+  font-weight:600;
+}
+
+</style>
+</head>
+
+<body>
+  <a href ="Dashboard.html"> Back to Dashboard</a>
+
+<div class="container">
+  <div class="card">
+    <h1>Menstrual Education 🌸</h1>
+
+    <div class="tabs">
+      <div class="tab active" onclick="showSection(0)">Cycle Basics</div>
+      <div class="tab" onclick="showSection(1)">Phases</div>
+      <div class="tab" onclick="showSection(2)">Self Care</div>
+      <div class="tab" onclick="showSection(3)">Myths</div>
+      <div class="tab" onclick="showSection(4)">Quiz</div>
+    </div>
+
+    <div class="section active">
+      <h3>What is the Menstrual Cycle?</h3>
+      <p>The menstrual cycle is a monthly hormonal cycle that prepares the body for pregnancy. 
+      The average cycle length is 28 days but can range from 21–35 days.</p>
+    </div>
+
+    <div class="section">
+      <h3>Four Phases</h3>
+      <ul>
+        <li><strong>Menstrual Phase:</strong> Shedding of uterine lining</li>
+        <li><strong>Follicular Phase:</strong> Egg develops</li>
+        <li><strong>Ovulation:</strong> Egg released</li>
+        <li><strong>Luteal Phase:</strong> Body prepares for next cycle</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Self Care Tips</h3>
+      <ul>
+        <li>Stay hydrated</li>
+        <li>Light exercise helps cramps</li>
+        <li>Balanced diet improves energy</li>
+        <li>Track mood changes</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h3>Myths vs Facts</h3>
+      <p><strong>Myth:</strong> You shouldn't exercise during period.<br>
+      <strong>Fact:</strong> Light exercise can reduce cramps.</p>
+    </div>
+
+    <div class="section">
+      <h3>Quick Quiz</h3>
+      <div class="quiz">
+        <p>Ovulation usually happens:</p>
+        <input type="radio" name="q1" value="wrong"> During menstruation<br>
+        <input type="radio" name="q1" value="correct"> Around 14 days before next period<br>
+        <input type="radio" name="q1" value="wrong"> After period ends<br>
+
+        <button onclick="checkAnswer()">Submit Answer</button>
+        <div class="result" id="quizResult"></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+function showSection(index){
+  const tabs = document.querySelectorAll(".tab");
+  const sections = document.querySelectorAll(".section");
+
+  tabs.forEach(t => t.classList.remove("active"));
+  sections.forEach(s => s.classList.remove("active"));
+
+  tabs[index].classList.add("active");
+  sections[index].classList.add("active");
+}
+
+function checkAnswer(){
+  const selected = document.querySelector("input[name='q1']:checked");
+  const result = document.getElementById("quizResult");
+
+  if(!selected){
+    result.textContent = "Please select an answer.";
+    return;
+  }
+
+  if(selected.value === "correct"){
+    result.textContent = "Correct! Ovulation usually happens around day 14.";
+  } else {
+    result.textContent = "Not quite. Try again!";
+  }
+}
+
+</script>
+
+</body>
+</html>
